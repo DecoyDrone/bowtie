@@ -35,11 +35,17 @@ module Bowtie
 
 	# doesnt trigger validations or callbacks
 	def self.update!(resource, params)
-		resource.update!(params)
+    params.each do |key, value|
+      resource.send(:"#{key}=", value)
+    end
+		resource.save!
 	end
 
 	def self.update(resource, params)
-		resource.update(params)
+    params.each do |key, value|
+      resource.send(:"#{key}=", value)
+    end
+		resource.save
 	end
 
 	def self.add_paging(resources, page)
